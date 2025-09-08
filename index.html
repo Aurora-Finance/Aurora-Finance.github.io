@@ -128,12 +128,12 @@
         
         /* --- Navegación --- */
         .navbar {
-            display: flex; justify-content: space-between; align-items: center; padding: 15px 0;
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 0;
             width: 100%; position: fixed; top: 0; left: 50%; transform: translateX(-50%);
             z-index: 1000; transition: background-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
         }
         .navbar.scrolled { background-color: rgba(10, 37, 64, 0.8); backdrop-filter: blur(10px); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); }
-        .logo img { height: 80px; width: auto; transition: transform 0.3s ease; }
+        .logo img { height: 100px; width: auto; transition: transform 0.3s ease; }
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-link { text-decoration: none; color: var(--blanco); font-weight: 600; transition: color 0.3s ease; font-size: 1rem; position: relative; }
         .nav-link:hover { color: var(--verde-hover); }
@@ -144,8 +144,25 @@
         }
         .cta-button:hover { background: var(--verde-hover); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 196, 140, 0.5); }
         .hamburger-menu { display: none; cursor: pointer; z-index: 1002; }
-        .mobile-nav { display: none; /* ... */ }
-        .mobile-nav.active { display: flex; /* ... */ }
+        .mobile-nav { 
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 37, 64, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1001;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+        }
+        .mobile-nav.active { display: flex; }
+        .mobile-nav .nav-link { font-size: 1.8rem; }
+        .mobile-nav .cta-button { font-size: 1.5rem; padding: 15px 35px; }
+
 
         /* --- Sección Héroe (NUEVO DISEÑO CENTRADO) --- */
         .hero-content { 
@@ -287,8 +304,76 @@
             font-size: 1.2rem;
         }
         
-        /* --- Footer --- */
-        .footer { background-color: #082038; /* ... */ }
+        /* --- NUEVO: Footer Completo --- */
+        .footer { 
+            background-color: #082038;
+            color: var(--blanco);
+            padding: 80px 0 40px 0;
+            position: relative;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--blanco);
+        }
+        .footer-logo {
+            height: 80px;
+            margin-bottom: 20px;
+        }
+        .footer-tagline {
+            font-size: 1.1rem;
+            color: var(--gris-texto-secundario);
+            margin-bottom: 20px;
+            max-width: 300px;
+        }
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+        .footer-links a {
+            color: var(--gris-texto-secundario);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: var(--verde-hover);
+        }
+        .footer-social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .footer-social-links a {
+            color: var(--gris-texto-secundario);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .footer-social-links a:hover {
+            color: var(--blanco);
+            transform: scale(1.1);
+        }
+        .footer-social-links svg {
+            width: 24px;
+            height: 24px;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--gris-borde);
+            color: var(--gris-oscuro);
+            font-size: 0.9rem;
+        }
 
         /* --- ANIMACIÓN DE SCROLL --- */
         .reveal-item { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; will-change: opacity, transform; }
@@ -301,10 +386,28 @@
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .hamburger-menu { display: block; }
-            .hero-text h1 { font-size: 4rem; }
-            .hero-text .hero-subtitle { font-size: 1.5rem; }
-            .star-logo { height: 50px; }
-            .about-grid { grid-template-columns: 1fr; }
+            .logo img { height: 60px; }
+            .section { padding: 80px 0; }
+            
+            .hero-text h1 { font-size: 3rem; }
+            .hero-text .hero-subtitle { font-size: 1.25rem; }
+            .star-logo { height: 40px; }
+            .section h2 { font-size: 2.2rem; }
+
+            .solution-grid, .persona-grid, .security-grid, .about-grid, .footer-grid { 
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                text-align: center;
+            }
+            .footer-about {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .footer-social-links {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -313,6 +416,14 @@
         <div class="aurora-shape shape1"></div>
         <div class="aurora-shape shape2"></div>
         <div class="aurora-shape shape3"></div>
+    </div>
+
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#solucion" class="nav-link">Solución</a>
+        <a href="#integracion" class="nav-link">Integración</a>
+        <a href="#seguridad" class="nav-link">Seguridad</a>
+        <a href="#para-quien" class="nav-link">¿Para Quién es?</a>
+        <a href="mailto:aurora.ai.finance@gmail.com?subject=Solicitud%20de%20Demo%20-%20Aurora%20AI&body=Hola,%20equipo%20de%20Aurora.%0A%0AMe%20gustar%C3%ADa%20solicitar%20m%C3%A1s%20informaci%C3%B3n%20y%20agendar%20una%20demostraci%C3%B3n%20personalizada.%0A%0AGracias." class="cta-button">Agendar una Demo</a>
     </div>
 
     <header class="navbar" id="navbar">
@@ -485,7 +596,35 @@
     </main>
 
     <footer class="footer">
-        <!-- Footer content remains the same -->
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column footer-about">
+                    <img src="https://github.com/Francisco0227/Aurora.github.io/blob/main/Logo%20de%20Aurora%20blanco%20sin%20fondo.png?raw=true" alt="Logo de Aurora en blanco" class="footer-logo">
+                    <p class="footer-tagline">Potenciando el futuro de las finanzas.</p>
+                    <div class="footer-social-links">
+                        <a href="https://www.linkedin.com/company/aurora-fintech-ia/about/?viewAsMember=true" target="_blank" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+                        <a href="https://x.com/Aurora_Fintech" target="_blank" aria-label="X (Twitter)"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                        <a href="https://www.facebook.com/profile.php?id=61580363584250" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                        <a href="https://www.instagram.com/aurora_fintech_ia/" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                        <a href="https://www.youtube.com/channel/UC8bcuWV1tjwC6ezn2sK62Ig" target="_blank" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M21.582 7.243c-.246-.91-.91-1.575-1.82-1.82C18.156 5 12 5 12 5s-6.156 0-7.762.423c-.91.245-1.575.91-1.82 1.82C2 8.844 2 12 2 12s0 3.156.423 4.757c.245.91.91 1.575 1.82 1.82C5.844 19 12 19 12 19s6.156 0 7.762-.423c.91-.245 1.575-.91 1.82-1.82C22 15.156 22 12 22 12s0-3.156-.418-4.757zM9.75 14.85V9.15l4.5 2.85-4.5 2.85z"/></svg></a>
+                        <a href="https://www.tiktok.com/@aurora_fintech_ia" target="_blank" aria-label="TikTok"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.59A2.592 2.592 0 0 1 7.27 15.4a2.592 2.592 0 0 1 2.59-2.59c.43 0 .84.1 1.21.29v-3.1a6.844 6.844 0 0 0-1.21-.12A6.592 6.592 0 0 0 3.27 16a6.592 6.592 0 0 0 6.59 6.59A6.592 6.592 0 0 0 16.45 16V9.47c2.43-.93 2.87-3.65 2.87-3.65s-.51-.5 0 0z"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-column footer-links">
+                    <h3>Navegación</h3>
+                    <ul>
+                        <li><a href="#solucion">Solución</a></li>
+                        <li><a href="#integracion">Integración</a></li>
+                        <li><a href="#seguridad">Seguridad</a></li>
+                        <li><a href="#para-quien">¿Para Quién es?</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Aurora. Todos los derechos reservados.</p>
+            </div>
+        </div>
     </footer>
     
     <script>
@@ -493,7 +632,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Lógica del menú móvil
             const hamburgerMenu = document.getElementById('hamburgerMenu');
-            const mobileNav = document.querySelector('.mobile-nav'); // Corrected selector
+            const mobileNav = document.getElementById('mobileNav');
             if (hamburgerMenu && mobileNav) {
                 const mobileNavLinks = mobileNav.querySelectorAll('a');
                 hamburgerMenu.addEventListener('click', () => mobileNav.classList.toggle('active'));
@@ -594,4 +733,5 @@
     </script>
 </body>
 </html>
+
 
